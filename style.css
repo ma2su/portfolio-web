@@ -1,0 +1,223 @@
+/* CONFIGURATION GÉNÉRALE */
+:root {
+    --bg-color: #000000;
+    --text-main: #ffffff;
+    --link-color: rgb(64, 234, 26);
+    --text-dim: #888888;
+    --border-style: 2px solid #ffffff;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    margin: 0; padding: 20px;
+}
+
+/* BOOT & NAV (Inchangé) */
+#boot-screen {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: #000; color: #fff; z-index: 10000;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 1s;
+}
+
+
+nav {
+    display: flex; justify-content: space-between;
+    border-bottom: var(--border-style);
+    padding-bottom: 10px; margin-bottom: 30px;
+}
+
+nav ul { list-style: none; display: flex; gap: 20px; padding: 0; }
+nav a { color: var(--text-main); text-decoration: none; font-weight: bold; }
+
+form {
+    overflow-y: hidden;
+}
+
+/* TERMINAL SHELL */
+.terminal-shell {
+    background: #111; padding: 15px;
+    border-left: 4px solid #fff; margin-bottom: 20px;
+}
+.prompt { 
+    color: #00ff41; 
+}
+.typing-cursor { 
+    animation: blink 0.8s infinite; 
+}
+@keyframes blink { 
+    50% { opacity: 0; } 
+}
+
+/* BOUTONS INTERACTIFS */
+.action-zone { 
+    margin-top: 25px; 
+    display: flex; 
+    gap: 15px; 
+}
+.btn-shell {
+    background: transparent; 
+    color: #fff;
+    border: 1px solid #fff; 
+    padding: 10px 15px;
+    font-family: var(--font-mono); cursor: pointer;
+}
+.btn-shell:hover { 
+    background: #fff; 
+    color: #000; 
+}
+
+/* FENÊTRE DE CONTENU DYNAMIQUE */
+#dynamic-content {
+    border: var(--border-style); margin: 30px 0;
+    background: #0a0a0a;
+}
+.hidden { display: none; }
+.window-header {
+    background: #fff; color: #000;
+    padding: 5px 15px; display: flex; justify-content: space-between;
+}
+#content-body { 
+    padding: 20px; 
+    white-space: pre-wrap; 
+    line-height: 1.6; 
+}
+#close-btn { 
+    background: none; 
+    border: none; 
+    font-weight: bold; 
+    cursor: pointer;
+ }
+
+/* FORMULAIRE & TITRES */
+.section-title {
+    background: #fff; 
+    color: #000;
+    padding: 5px 15px; 
+    margin: 40px 0 20px 0;
+    display: inline-block; 
+    text-transform: uppercase;
+}
+input, textarea {
+    width: 90%; 
+    padding: 10px; 
+    margin-top: 10px;
+    background: #000; 
+    border: var(--border-style); 
+    color: #fff;
+    font-family: var(--font-mono);
+}
+button[type="submit"] {
+    margin-top: 20px; 
+    background: #fff; 
+    color: #000;
+    border: none; 
+    padding: 10px 20px; 
+    cursor: pointer;
+}
+footer { 
+    margin-top: 50px; 
+    text-align: center; 
+    color: var(--text-dim);
+     font-size: 0.8rem; 
+}
+
+pre a {
+    color: #00ff9c;
+    text-decoration: none;
+}
+
+pre a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* =========================
+   WINDOWS UNIFORMES (PROJECTS / TREE / FILES)
+========================= */
+
+/* Fenêtre générique (arborescence + projets) */
+.window,
+#project-tree,
+.project {
+    background-color: var(--bg-color);
+    border: var(--border-style);
+    margin: 30px 0;
+}
+
+/* Header déjà existant → on harmonise */
+.window-header {
+    background: #000;
+    color: #fff;
+    border-bottom: var(--border-style);
+}
+
+/* Corps de fenêtre */
+.window-body,
+.project {
+    padding: 20px;
+    white-space: pre-wrap;
+    line-height: 1.6;
+}
+
+/* Arborescence */
+#project-tree pre {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--text-main);
+}
+
+/* Liens projets (déjà ok, on garde cohérent) */
+#project-tree a,
+.project a {
+    color: var(--text-main);
+    text-decoration: underline;
+}
+
+/* Titres projets */
+.project h2,
+.project h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Listes propres */
+.project ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+/* Bouton close cohérent */
+.window-header button,
+#close-btn {
+    color: #fff;
+}
+
+.window-header button:hover,
+#close-btn:hover {
+    color: #ff4d4d;
+    cursor: pointer;
+}
+
+.screenshot{
+    height:600px;
+    width: auto;
+    margin: 10px;
+}
+
+#archlinux a {
+    color: #00ff41 !important;
+}
+
+#socialapp .project-image{
+    display: inline-flex;
+}
+
+#socialapp a{
+    color:rgb(64, 234, 26);
+}

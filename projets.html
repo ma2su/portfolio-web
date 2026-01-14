@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Projets</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="images/ico.jpeg">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="logo"><strong>[SVEN_MVULA_ROOT]</strong></div>
+    <ul>
+        <li><a href="index.html" id="go-home">./home</a></li>
+        <li><a href="index.html#contact">./contact</a></li>
+    </ul>
+</nav>
+
+<!-- TERMINAL -->
+<header>
+    <div class="terminal-shell">
+        <div class="prompt-line">
+            <span class="prompt">guest@terminal:/projects$</span>
+            <span id="fake-input"></span>
+            <span class="typing-cursor">_</span>
+        </div>
+    </div>
+</header>
+
+<main>
+
+<!-- ARBORESCENCE -->
+<section id="project-tree" class="window hidden">
+    <div class="window-header">
+        <span class="window-title">projects.tree</span>
+        <button class="window-close" id="close-tree">[X]</button>
+    </div>
+
+    <div class="window-body">
+<pre>
+projects/
+├── <a href="#" data-project="web_portfolio">web_portfolio</a>
+├── <a href="#" data-project="archlinux">archlinux_hyprland</a>
+└── <a href="#" data-project="socialapp">social_app</a>
+</pre>
+    </div>
+</section>
+
+<!-- CONTENU PROJETS -->
+<section id="projects-content">
+
+    <div class="project hidden" id="web_portfolio">
+        <h2>WEB PORTFOLIO</h2>
+
+        <p>Vous vous trouvez actuellement sur ce portfolio. Il a été conçu afin de présenter mes compétences techniques, mes projets et mon univers autour de la cybersécurité et du développement. L’objectif est de proposer une interface claire, interactive et fidèle à mon profil, tout en mettant en valeur mon approche technique et ma manière de travailler.</p>
+
+        <p>Vous pouvez retrouver ici le lien vers mon dépôt GitHub afin de consulter
+directement le code et les détails du projet: <a href="https://github.com/ma2su/network-chat-app" target="_blank">GitHub</a></p>
+
+        <p><strong>Status :</strong> COMPLETED</p>
+    </div>
+
+    <div class="project hidden" id="socialapp">
+        <h2>APPLICATION COMMUNICANTE</h2>
+
+
+
+       <p>
+    Ce projet consiste en la création d’une application communicante permettant
+    à plusieurs utilisateurs d’échanger des messages via un réseau. L’objectif
+    était de comprendre concrètement comment des applications communiquent entre
+    elles, comment les données sont transmises et traitées, et comment gérer des
+    échanges entre plusieurs utilisateurs de manière structurée.
+</p>
+
+<p>
+    L’application repose sur un fonctionnement client/serveur, dans lequel un
+    serveur central gère les connexions, les utilisateurs et les messages
+    échangés. Ce projet m’a permis de développer des compétences en
+    programmation, en réseaux et en logique applicative, tout en abordant des
+    notions clés telles que la gestion des échanges, la fiabilité des
+    communications et la structuration des données.
+</p>
+
+
+        <div class="project-image">
+            <img src="images/screen1.png" alt="application" class="screenshot">
+            <img src="images/screen2.png" alt="application" class="screenshot">
+            <img src="images/image copy 3.png" alt="application" class="screenshot">
+            <img src="images/image copy 4.png" alt="application" class="screenshot">
+            <img src="images/image copy 5.png" alt="application" class="screenshot">
+        </div>
+
+        <p>Vous pouvez retrouver ici le lien vers mon dépôt GitHub afin de consulter
+directement le code et les détails du projet: <a href="https://github.com/ma2su/network-chat-app" target="_blank">GitHub</a></p>
+
+        <p><strong>Status :</strong> COMPLETED</p>
+
+    </div>
+
+</section>
+
+<div class="project hidden" id="archlinux">
+        <h2>ARCH LINUX – HYPRLAND</h2>
+
+
+
+        <p>
+    Lorsque j’ai décidé de me lancer sur Linux, je souhaitais utiliser une
+    distribution différente de celles que l’on retrouve habituellement.
+    Je recherchais un système à la fois utilitaire et adapté à une utilisation
+    quotidienne. C’est dans ce contexte que j’ai découvert Arch Linux à travers
+    une présentation mettant en avant l’environnement Hyprland.
+</p>
+
+<p>
+    Attiré par la flexibilité offerte par Arch Linux et par l’approche du window
+    manager Hyprland, j’ai choisi de construire mon environnement entièrement à
+    partir de zéro. Ce projet m’a permis de créer un système personnalisé,
+    optimisé selon mes besoins, et en accord avec ma manière de travailler, afin
+    d’obtenir un environnement qui me correspond réellement.
+</p>
+
+
+        <div class="project-image">
+            <img src="images/image copy.png" alt="Arch Linux Hyprland" class="screenshot">
+            <img src="images/image copy 2.png" alt="Arch Linux Hyprland" class="screenshot">
+        </div>
+
+        <p>Vous pouvez retrouver ici le lien vers mon dépôt GitHub afin de consulter
+directement le code et les détails du projet: <a href="https://github.com/ma2su/dotfiles-hyprland/" target="_blank">GitHub</a></p>
+
+        <p><strong>Status :</strong> COMPLETED</p>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    <p>SYSTEM_V1.0 | PROJECTS | 2026</p>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const fakeInput = document.getElementById("fake-input");
+    const tree = document.getElementById("project-tree");
+    const projectLinks = document.querySelectorAll("[data-project]");
+    const projects = document.querySelectorAll(".project");
+    const goHome = document.getElementById("go-home");
+
+    function typeCommand(cmd, callback) {
+        fakeInput.textContent = "";
+        let i = 0;
+
+        const interval = setInterval(() => {
+            if (i < cmd.length) {
+                fakeInput.textContent += cmd.charAt(i);
+                i++;
+            } else {
+                clearInterval(interval);
+                setTimeout(callback, 300);
+            }
+        }, 40);
+    }
+
+    /* lance ls en accedent a la page trop bien hahahaha */
+    typeCommand("ls", () => {
+        tree.classList.remove("hidden");
+    });
+
+    /* Clic projet */
+    projectLinks.forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const target = link.dataset.project;
+
+            typeCommand(`open ${target}`, () => {
+                projects.forEach(p => p.classList.add("hidden"));
+                document.getElementById(target).classList.remove("hidden");
+            });
+        });
+    });
+
+    /* quand on retour ça écrit dans le terminal cd ~ B)*/
+    goHome.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        typeCommand("cd ~", () => {
+            window.location.href = "index.html";
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>

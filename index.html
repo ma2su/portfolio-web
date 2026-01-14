@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Sven Mvula</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="images/ico.jpeg">
+</head>
+<body>
+
+    <!-- BOOT SCREEN -->
+    <div id="boot-screen">
+        <pre id="boot-text"></pre>
+    </div>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="logo">
+            <strong>[SVEN_MVULA_ROOT]</strong>
+        </div>
+        <ul>
+            <li><a href="index.html">./home</a></li>
+            <li><a href="projets.html" id="go-projects">./mes_projets</a></li>
+        </ul>
+    </nav>
+
+    <!-- HEADER / TERMINAL -->
+    <header>
+        <div class="terminal-shell">
+            <div class="prompt-line">
+                <span class="prompt">guest@terminal:~$</span>
+                <span id="fake-input"></span>
+                <span class="typing-cursor">_</span>
+            </div>
+        </div>
+
+        <div id="hero-content">
+            <h1>MVULA Sven</h1>
+            <p># Étudiant BUT R&amp;T en parcours Cyber | Aspirant Pentester &amp; Analyste SOC</p>
+            <p># Focus : Sécurité Offensive, Exploitation de vulnérabilités et Durcissement (Hardening) de systèmes.</p>
+            <p># En recherche active d'un stage technique (Avril 2026) pour casser des barrières et sécuriser vos actifs.</p>
+
+            <div class="action-zone">
+                <button class="nav-cmd btn-shell" data-cmd="cat about_me.txt" data-target="about">./a_propos</button>
+                <button class="nav-cmd btn-shell" data-cmd="ls skills/" data-target="skills">./competences</button>
+                <button class="nav-cmd btn-shell" data-cmd="cat passions.log" data-target="passions">./passions</button>
+                <button class="nav-cmd btn-shell" data-cmd="open contact.form" data-target="contact">./contact</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- DYNAMIC CONTENT -->
+    <main>
+        <section id="dynamic-content" class="hidden">
+            <div class="window-header">
+                <span id="current-file">file.txt</span>
+                <button id="close-btn">[X]</button>
+            </div>
+            <div id="content-body"></div>
+        </section>
+    </main>
+
+    <!-- CONTACT TEMPLATE -->
+    <section id="contact" class="hidden">
+        <form>
+            <input type="text" placeholder="NOM_UTILISATEUR" required>
+            <input type="email" placeholder="EMAIL_ADRESSE" required>
+            <textarea rows="5" placeholder="VOTRE_MESSAGE... (max 1024 bytes)"></textarea>
+            <button type="submit">EXECUTER L'ENVOI</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>SYSTEM_V0.5 - scripté avec passion</p>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            /* boot animation comme si on entrain dans le systèeme pas mal */
+            const bootScreen = document.getElementById('boot-screen');
+            const bootTextElement = document.getElementById('boot-text');
+
+            const messages = [
+                 "INITIALISATION DU SYSTÈME...",
+                "CHARGEMENT DES MODULES...",
+                "PRÉPARATION DE LA SESSION UTILISATEUR...",
+                "SYSTÈME OPÉRATIONNEL",
+                "BIENVENUE"
+            ];
+
+            let msgIdx = 0;
+            let charIdx = 0;
+
+function typeBoot() {
+    if (msgIdx < messages.length) {
+        if (charIdx < messages[msgIdx].length) {
+            bootTextElement.textContent += messages[msgIdx].charAt(charIdx);
+            charIdx++;
+            setTimeout(typeBoot, 30);
+        } else {
+            bootTextElement.textContent += '\n';
+            msgIdx++;
+            charIdx = 0;
+            setTimeout(typeBoot, 200);
+        }
+    } else {
+        bootScreen.style.opacity = '0';
+        setTimeout(() => {
+            bootScreen.style.display = 'none';
+        }, 1000);
+    }
+}
+
+/*  ok la on boot qu'une fois si jamais on a déjà fait la scène d'animation  */
+if (!sessionStorage.getItem("bootPlayed")) {
+    sessionStorage.setItem("bootPlayed", "true");
+    typeBoot();
+} else {
+    // skip boot
+    bootScreen.style.display = "none";
+}
+
+
+            /* bref le tralala la pour le terminal je veux un doliprane */
+            const fakeInput = document.getElementById("fake-input");
+
+            function typeCommand(cmd, callback) {
+                fakeInput.textContent = "";
+                let i = 0;
+
+                const interval = setInterval(() => {
+                    if (i < cmd.length) {
+                        fakeInput.textContent += cmd[i++];
+                    } else {
+                        clearInterval(interval);
+                        setTimeout(callback, 300);
+                    }
+                }, 40);
+            }
+
+            /* quand on se rend dans la page projects ça fait cd projects voilaàaaa*/
+            const goProjects = document.getElementById("go-projects");
+
+            goProjects.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                typeCommand("cd projects", () => {
+                    sessionStorage.setItem("fromHome", "true");
+                    window.location.href = "projets.html";
+                });
+            });
+
+            /* contenu des diverses pages */
+            const files = {
+
+    about: 
+`À PROPOS
+
+Je suis étudiant en BUT Réseaux & Télécommunications, parcours Cybersécurité, avec un fort intérêt pour la sécurité offensive et l’analyse des systèmes. Depuis plusieurs années, je m’intéresse à la manière dont les applications, les réseaux et les infrastructures fonctionnent, mais surtout à la façon dont ils peuvent être détournés ou sécurisés.
+
+Mon approche est avant tout pratique. J’aime apprendre en expérimentant, en testant et en cherchant à comprendre les mécanismes internes des systèmes. Les CTF, les home labs personnels et les projets techniques me permettent de développer une méthodologie rigoureuse, un esprit d’analyse et une réelle autonomie face aux problématiques de sécurité.
+
+Je m’intéresse particulièrement à l’identification de vulnérabilités, à leur exploitation contrôlée et aux moyens de renforcer la sécurité des environnements informatiques. Cette double vision, offensive et défensive, est au cœur de ma manière de travailler et de progresser dans le domaine de la cybersécurité.
+
+Aujourd’hui, je suis à la recherche d’un stage technique à partir d’avril 2026 afin d’évoluer dans un environnement stimulant, continuer à apprendre et contribuer concrètement à la sécurisation des systèmes.`,
+
+    skills:
+`--- [ COMPÉTENCES TECHNIQUES ] ---
+
+> RÉSEAUX & INFRASTRUCTURE :
+- Configuration de réseaux et commutateurs (VLAN, inter-VLAN)
+- Routage statique et notions de routage dynamique
+- Services réseau : DNS, DHCP, SSH
+- Analyse et diagnostic des flux réseau
+
+> CYBERSÉCURITÉ :
+- Tests d’intrusion (bases) : reconnaissance avec Nmap
+- Exploitation encadrée de vulnérabilités avec Metasploit
+- Sécurité applicative : DVWA, Mutillidae
+- Analyse de trafic réseau avec Wireshark
+- Analyse de logs et détection d’incidents
+- Mise en place de laboratoires de test
+
+> SYSTÈME & DÉVELOPPEMENT :
+- Administration Linux (Debian, Ubuntu)
+- Scripting et automatisation en Python et Bash
+- Développement web : HTML, CSS, JavaScript
+- Virtualisation : Proxmox
+
+--- [ COMPÉTENCES TRANSVERSES ] ---
+- Curiosité technique et apprentissage autonome
+- Rigueur et méthodologie
+- Esprit d’analyse
+- Travail en équipe et adaptabilité`,
+
+    passions:
+`PASSIONS & MOTIVATIONS
+
+La cybersécurité est au cœur de mes centres d’intérêt, notamment à travers les CTF que je considère comme une approche concrète du pentesting. J’apprécie particulièrement la recherche de failles et l’exploitation de vulnérabilités sur des applications ou des sites web, afin de comprendre leurs faiblesses et les mécanismes de défense associés.
+
+La programmation m’accompagne depuis mon plus jeune âge. J’aime concevoir des scripts, automatiser des tâches et développer des projets personnels, notamment dans un contexte de sécurité informatique. C’est un domaine qui stimule ma réflexion, ma logique et ma créativité.
+
+La musique occupe une place importante dans mon équilibre personnel. Jouer du piano ou de la guitare me permet d’exprimer ma créativité tout en travaillant la rigueur et la précision. La pratique en groupe développe l’écoute et la cohésion pour construire quelque chose d’harmonieux.
+
+Les jeux vidéo représentent également un moyen de détente et de réflexion, autant en tant que joueur qu’en tant que créateur. Les jeux d’équipe favorisent la coordination, la stratégie collective et permettent de relâcher la pression.
+
+Enfin, le sport fait partie intégrante de mon quotidien. La musculation développe la discipline et le dépassement de soi, tandis que les sports collectifs comme le basketball et le football renforcent l’esprit d’équipe et l’équilibre mental.`
+};
+
+
+            /* logique du terminal pitié aider moi...*/
+            const navLinks = document.querySelectorAll(".nav-cmd");
+            const dynamicSection = document.getElementById("dynamic-content");
+            const contentBody = document.getElementById("content-body");
+            const currentFile = document.getElementById("current-file");
+
+            let isTyping = false;
+
+            navLinks.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    if (isTyping) return;
+                    isTyping = true;
+
+                    const cmd = btn.dataset.cmd;
+                    const target = btn.dataset.target;
+
+                    typeCommand(cmd, () => {
+
+                        if (target === "contact") {
+                            currentFile.textContent = "contact.form";
+                            contentBody.innerHTML = document.getElementById("contact").innerHTML;
+                        } else {
+                            currentFile.textContent = cmd.split(" ")[1];
+                            contentBody.textContent = files[target];
+                        }
+
+                        dynamicSection.classList.remove("hidden");
+                        dynamicSection.scrollIntoView({ behavior: "smooth" });
+                        isTyping = false;
+                    });
+                });
+            });
+
+            document.getElementById("close-btn").addEventListener("click", () => {
+                dynamicSection.classList.add("hidden");
+                fakeInput.textContent = "";
+            });
+
+        });
+    </script>
+
+</body>
+</html>
